@@ -2,6 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Para Sofía 💖</title>
 
 <!-- 🌸 Fuentes románticas -->
@@ -11,46 +13,66 @@
 body {
   background: white;
   text-align: center;
-  padding-top: 40px;
   overflow: hidden;
   cursor: url('https://cur.cursors-4u.net/symbols/sym-1/sym57.cur'), auto;
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
 }
 
 /* ✨ título */
 h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 40px;
+  font-size: 42px;
   color: #d63384;
 }
 
 /* ✨ pregunta */
 h2 {
   font-family: 'Dancing Script', cursive;
-  font-size: 30px;
+  font-size: 32px;
   color: #555;
 }
 
-/* 🐧 pingüinas */
+/* 🐧 PINGÜINAS GRANDES */
 img {
-  width: 250px;
-  margin: 20px 0;
-  animation: saltar 1.5s ease;
+  width: 340px;
+  max-width: 95%;
+  margin: 25px auto;
+  animation: saltar 1.2s ease;
 }
 
+/* salto inicial */
 @keyframes saltar {
   0% { transform: translateY(0); }
-  30% { transform: translateY(-20px); }
+  30% { transform: translateY(-25px); }
   60% { transform: translateY(0); }
+}
+
+/* balanceo suave continuo */
+.mover {
+  animation: balanceo 3s ease-in-out infinite;
+}
+
+@keyframes balanceo {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(2deg); }
+  50%  { transform: rotate(0deg); }
+  75%  { transform: rotate(-2deg); }
+  100% { transform: rotate(0deg); }
 }
 
 /* 💕 botones */
 button {
   font-family: 'Lora', serif;
-  font-size: 20px;
-  padding: 12px 24px;
-  margin: 15px;
+  font-size: 22px;
+  padding: 14px 26px;
+  margin: 12px;
   border: none;
-  border-radius: 12px;
+  border-radius: 16px;
   cursor: pointer;
 }
 
@@ -72,28 +94,28 @@ button {
 }
 
 @keyframes glow {
-  from { text-shadow: 0 0 5px #ff9ad5; }
-  to { text-shadow: 0 0 15px #ff4da6; }
+  from { text-shadow: 0 0 6px #ff9ad5; }
+  to   { text-shadow: 0 0 18px #ff4da6; }
 }
 
 /* 💌 mensaje */
 #mensaje {
   display: none;
   font-family: 'Lora', serif;
-  font-size: 22px;
+  font-size: 23px;
   color: #d63384;
-  max-width: 650px;
-  margin: 40px auto;
-  line-height: 1.6;
+  max-width: 720px;
+  margin: 30px auto;
+  line-height: 1.7;
 }
 
 /* 🌟 pantalla secreta */
 #secreto {
   display: none;
   font-family: 'Dancing Script', cursive;
-  font-size: 28px;
+  font-size: 30px;
   color: #ff4da6;
-  margin-top: 40px;
+  margin-top: 35px;
   cursor: pointer;
 }
 
@@ -101,7 +123,7 @@ button {
 .corazon {
   position: fixed;
   top: -10px;
-  font-size: 22px;
+  font-size: 24px;
   animation: caer linear forwards;
 }
 
@@ -111,12 +133,24 @@ button {
     opacity: 0;
   }
 }
+
+/* 📱 ANDROID */
+@media (max-width: 600px) {
+  h1 { font-size: 50px; }
+  h2 { font-size: 38px; }
+  img { width: 95%; }
+  #mensaje { font-size: 25px; }
+  button {
+    font-size: 26px;
+    padding: 18px 34px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<!-- 🎶 música (se activa al presionar SÍ) -->
+<!-- 🎶 música -->
 <audio id="musica" loop>
   <source src="https://cdn.pixabay.com/audio/2023/02/14/audio_0c0c8a5d7a.mp3" type="audio/mpeg">
 </audio>
@@ -124,12 +158,12 @@ button {
 <h1>Sofía 💖</h1>
 <h2>¿Quieres ser mi San Valentín?</h2>
 
-<img src="pinguinos.png" alt="Pingüinas enamoradas">
+<img id="pinguinos" src="pinguinos.png" alt="Pingüinas enamoradas">
 
-<br>
-
-<button id="si" onclick="aceptar()">Sí 💕</button>
-<button id="no" onmouseover="moverNo()">No 🙈</button>
+<div>
+  <button id="si" onclick="aceptar()">Sí 💕</button>
+  <button id="no" onmouseover="moverNo()">No 🙈</button>
+</div>
 
 <div id="mensaje"></div>
 
@@ -152,7 +186,7 @@ function moverNo() {
   const noBtn = document.getElementById("no");
   noBtn.innerText = frasesNo[Math.min(intentos, frasesNo.length - 1)];
   noBtn.style.left = Math.random() * 80 + "vw";
-  noBtn.style.top = Math.random() * 80 + "vh";
+  noBtn.style.top  = Math.random() * 80 + "vh";
   intentos++;
 }
 
@@ -160,8 +194,18 @@ function aceptar() {
   document.getElementById("si").style.display = "none";
   document.getElementById("no").style.display = "none";
 
-  // 🎶 iniciar música
-  document.getElementById("musica").play();
+  // 📳 vibración suave (Android)
+  if (navigator.vibrate) {
+    navigator.vibrate([120, 60, 120]); // suave y romántica
+  }
+
+  // 🎶 música a volumen completo
+  const musica = document.getElementById("musica");
+  musica.volume = 1;
+  musica.play();
+
+  // 🐧 mover pingüinas
+  document.getElementById("pinguinos").classList.add("mover");
 
   escribirMensaje();
   document.getElementById("secreto").style.display = "block";
@@ -170,20 +214,21 @@ function aceptar() {
 /* ✍️ efecto carta */
 const texto = `💖✨ Amor ✨💖
 
-No imaginas lo feliz que me haces.
-Desde que llegaste a mi vida, todo se siente distinto:
-más bonito, más suave, más verdadero. 
-Aprendí lo que era el amor 🐧💞
 
-Me encanta tu luz, tu forma de ser
+\nNo te imaginas lo feliz que me haces.
+Desde que llegaste, todo se siente distinto:
+más bonito, más suave, más verdadero.
+Aprendí lo que era el amor.💞
+
+\nMe encanta tu luz, tu forma de ser
 y esa magia tuya que sigues teniendo.
 Gracias por estar, por existir
 y por hacerme sonreír.
 
-Este San Valentín
+\nEste San Valentín
 y todos los que vengan,
 te elijo a ti…
-mi estrellita ⭐💖`;
+estrellita ⭐💖`;
 
 let i = 0;
 function escribirMensaje() {
@@ -210,9 +255,9 @@ setInterval(() => {
 
 /* 🌟 secreto */
 function mostrarSecreto() {
-  alert("⭐ Prometo cuidarte, hacerte reír y elegirte siempre.\nTe amo muchísimo, estrellita 💖");
+  alert("⭐ Prometo cuidarte, hacerte reír y elegirte siempre.\nTe amo muchísimo, estrellita ✨💖");
 }
 </script>
 
 </body>
-  </html>
+</html>
