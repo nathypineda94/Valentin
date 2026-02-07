@@ -116,8 +116,8 @@ button {
 
 <body>
 
-<!-- 🎶 música -->
-<audio autoplay loop>
+<!-- 🎶 música (se activa al presionar SÍ) -->
+<audio id="musica" loop>
   <source src="https://cdn.pixabay.com/audio/2023/02/14/audio_0c0c8a5d7a.mp3" type="audio/mpeg">
 </audio>
 
@@ -134,7 +134,7 @@ button {
 <div id="mensaje"></div>
 
 <div id="secreto" onclick="mostrarSecreto()">
-  ✨ Toca aquí, <span class="estrellita">mi estrellita ⭐</span> ✨
+  ✨ Toca aquí, <span class="estrellita">estrellita ⭐</span> ✨
 </div>
 
 <script>
@@ -159,16 +159,21 @@ function moverNo() {
 function aceptar() {
   document.getElementById("si").style.display = "none";
   document.getElementById("no").style.display = "none";
+
+  // 🎶 iniciar música
+  document.getElementById("musica").play();
+
   escribirMensaje();
   document.getElementById("secreto").style.display = "block";
 }
 
 /* ✍️ efecto carta */
-const texto = `💖✨ Mi estrellita ✨💖
+const texto = `💖✨ Amor ✨💖
 
 No imaginas lo feliz que me haces.
 Desde que llegaste a mi vida, todo se siente distinto:
-más bonito, más suave, más verdadero 🐧💞
+más bonito, más suave, más verdadero. 
+Aprendí lo que era el amor 🐧💞
 
 Me encanta tu luz, tu forma de ser
 y esa magia tuya que sigues teniendo.
@@ -210,4 +215,4 @@ function mostrarSecreto() {
 </script>
 
 </body>
-</html>
+  </html>
