@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Para Sofía 💕</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #ffe6f0;
+      text-align: center;
+      padding-top: 40px;
+    }
+    h1 {
+      color: #d63384;
+    }
+    img {
+      width: 250px;
+      margin: 20px 0;
+    }
+    button {
+      font-size: 20px;
+      padding: 12px 24px;
+      margin: 15px;
+      cursor: pointer;
+      border: none;
+      border-radius: 12px;
+    }
+    #yes {
+      background-color: #4CAF50;
+      color: white;
+    }
+    #no {
+      background-color: #ff4d6d;
+      color: white;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Sofía 💖</h1>
+  <h2>¿Quieres ser mi San Valentín?</h2>
+
+  <img src="pinguinos.png" alt="Pingüinas enamoradas">
+
+  <br>
+  <button id="yes" onclick="acepto()">Sí 💕</button>
+  <button id="no" onmouseover="moverNo()">No 🙈</button>
+
+  <script>
+    function moverNo() {
+      const frases = [
+        "¿Segura? 🥺",
+        "Las pingüinas creen en nosotros 🐧",
+        "Una oportunidad más, Sofi 💖",
+        "No seas malita 😭",
+        "Di que síii 💕"
+      ];
+      const noBtn = document.getElementById("no");
+      noBtn.innerText = frases[Math.floor(Math.random() * frases.length)];
+      noBtn.style.left = Math.random() * 80 + "vw";
+      noBtn.style.top = Math.random() * 80 + "vh";
+    }
+
+    function acepto() {
+      alert("💘 Sabía que dirías que sí 💘\nTe quiero muchísimo, Sofía 🐧💕");
+    }
+  </script>
+
+</body>
+    </html>
