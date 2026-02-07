@@ -13,29 +13,37 @@ body {
   text-align: center;
   padding-top: 40px;
   overflow: hidden;
+  cursor: url('https://cur.cursors-4u.net/symbols/sym-1/sym57.cur'), auto;
 }
 
-/* 💖 título */
+/* ✨ título */
 h1 {
   font-family: 'Playfair Display', serif;
   font-size: 40px;
   color: #d63384;
-  margin-bottom: 10px;
 }
 
-/* 💕 pregunta */
+/* ✨ pregunta */
 h2 {
   font-family: 'Dancing Script', cursive;
   font-size: 30px;
   color: #555;
-  margin-bottom: 25px;
 }
 
+/* 🐧 pingüinas */
 img {
   width: 250px;
   margin: 20px 0;
+  animation: saltar 1.5s ease;
 }
 
+@keyframes saltar {
+  0% { transform: translateY(0); }
+  30% { transform: translateY(-20px); }
+  60% { transform: translateY(0); }
+}
+
+/* 💕 botones */
 button {
   font-family: 'Lora', serif;
   font-size: 20px;
@@ -57,24 +65,39 @@ button {
   position: absolute;
 }
 
-/* 💌 Mensaje final */
+/* ✨ glow estrellita */
+.estrellita {
+  text-shadow: 0 0 8px #ff9ad5;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 5px #ff9ad5; }
+  to { text-shadow: 0 0 15px #ff4da6; }
+}
+
+/* 💌 mensaje */
 #mensaje {
   display: none;
   font-family: 'Lora', serif;
   font-size: 22px;
   color: #d63384;
+  max-width: 650px;
   margin: 40px auto;
-  max-width: 600px;
   line-height: 1.6;
-  animation: aparecer 1.5s ease;
 }
 
-@keyframes aparecer {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+/* 🌟 pantalla secreta */
+#secreto {
+  display: none;
+  font-family: 'Dancing Script', cursive;
+  font-size: 28px;
+  color: #ff4da6;
+  margin-top: 40px;
+  cursor: pointer;
 }
 
-/* 💕 corazones */
+/* 💖 corazones */
 .corazon {
   position: fixed;
   top: -10px;
@@ -93,6 +116,11 @@ button {
 
 <body>
 
+<!-- 🎶 música -->
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/audio/2023/02/14/audio_0c0c8a5d7a.mp3" type="audio/mpeg">
+</audio>
+
 <h1>Sofía 💖</h1>
 <h2>¿Quieres ser mi San Valentín?</h2>
 
@@ -103,63 +131,82 @@ button {
 <button id="si" onclick="aceptar()">Sí 💕</button>
 <button id="no" onmouseover="moverNo()">No 🙈</button>
 
-<div id="mensaje">
-  💖✨ <strong>Mi estrellita</strong> ✨💖<br><br>
+<div id="mensaje"></div>
 
-  Te amo muchísimo…<br>
-  desde que llegaste, todo se siente distinto.<br>
-  Más bonito, más tranquilo, más verdadero 🐧💞<br><br>
-
-  Me encanta tu luz, tu forma de ser<br>
-  y esa magia tuya que sigues teniendo.<br>
-  Gracias por estar, por existir<br>
-  y por hacerme sentir así 💫<br><br>
-
-  Hoy, mañana y siempre,<br>
-  te elijo a ti…<br>
-  <em>mi estrellita</em> ⭐💖
+<div id="secreto" onclick="mostrarSecreto()">
+  ✨ Toca aquí, <span class="estrellita">mi estrellita ⭐</span> ✨
 </div>
 
 <script>
-function moverNo() {
-  const frases = [
-    "¿Segura? 😏",
-    "Las pingüinas creen en nosotros 🐧💖",
-    "Una oportunidad más, estrellita ⭐",
-    "No seas malita 😜",
-    "Di que sííí 💕"
-  ];
+const frasesNo = [
+  "¿Segura? 😏",
+  "Las pingüinas creen en nosotros 🐧💖",
+  "Una oportunidad más, estrellita ⭐",
+  "No seas malita 😜",
+  "ok ok… me rindo 😅"
+];
 
+let intentos = 0;
+
+function moverNo() {
   const noBtn = document.getElementById("no");
-  noBtn.innerText = frases[Math.floor(Math.random() * frases.length)];
+  noBtn.innerText = frasesNo[Math.min(intentos, frasesNo.length - 1)];
   noBtn.style.left = Math.random() * 80 + "vw";
   noBtn.style.top = Math.random() * 80 + "vh";
+  intentos++;
 }
 
 function aceptar() {
   document.getElementById("si").style.display = "none";
   document.getElementById("no").style.display = "none";
-  document.getElementById("mensaje").style.display = "block";
+  escribirMensaje();
+  document.getElementById("secreto").style.display = "block";
 }
 
-/* 💕 lluvia de corazones mezclados */
+/* ✍️ efecto carta */
+const texto = `💖✨ Mi estrellita ✨💖
+
+No imaginas lo feliz que me haces.
+Desde que llegaste a mi vida, todo se siente distinto:
+más bonito, más suave, más verdadero 🐧💞
+
+Me encanta tu luz, tu forma de ser
+y esa magia tuya que sigues teniendo.
+Gracias por estar, por existir
+y por hacerme sonreír.
+
+Este San Valentín
+y todos los que vengan,
+te elijo a ti…
+mi estrellita ⭐💖`;
+
+let i = 0;
+function escribirMensaje() {
+  const cont = document.getElementById("mensaje");
+  cont.style.display = "block";
+  const intervalo = setInterval(() => {
+    cont.innerHTML += texto.charAt(i);
+    i++;
+    if (i >= texto.length) clearInterval(intervalo);
+  }, 40);
+}
+
+/* 💕 corazones */
 const corazones = ["💖","💗","💘","💞","💕"];
+setInterval(() => {
+  const c = document.createElement("div");
+  c.className = "corazon";
+  c.innerText = corazones[Math.floor(Math.random() * corazones.length)];
+  c.style.left = Math.random() * 100 + "vw";
+  c.style.animationDuration = (Math.random() * 3 + 2) + "s";
+  document.body.appendChild(c);
+  setTimeout(() => c.remove(), 5000);
+}, 350);
 
-function crearCorazon() {
-  const corazon = document.createElement("div");
-  corazon.classList.add("corazon");
-  corazon.innerText = corazones[Math.floor(Math.random() * corazones.length)];
-  corazon.style.left = Math.random() * 100 + "vw";
-  corazon.style.animationDuration = (Math.random() * 3 + 2) + "s";
-
-  document.body.appendChild(corazon);
-
-  setTimeout(() => {
-    corazon.remove();
-  }, 5000);
+/* 🌟 secreto */
+function mostrarSecreto() {
+  alert("⭐ Prometo cuidarte, hacerte reír y elegirte siempre.\nTe amo muchísimo, estrellita 💖");
 }
-
-setInterval(crearCorazon, 350);
 </script>
 
 </body>
